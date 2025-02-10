@@ -6,6 +6,7 @@ export const db = mysql.createConnection({
     user:"root",
     password: process.env.dbPassword,
     database: "blog",
+    port: 3306
     
 });
 
