@@ -2,11 +2,11 @@ import mysql from 'mysql2';
 import dotenv from "dotenv"
 dotenv.config()
 export const db = mysql.createConnection({
-    host: '127.0.0.1',
-    user:"root",
+    host: process.env.connectionstring,
+    user:process.env.dbuser,
     password: process.env.dbPassword,
-    database: "blog",
-    port: 3306
+    database: process.env.db,
+    port: process.env.dbport
     
 });
 
