@@ -11,7 +11,7 @@ export const getPost = (req, res) => {
 };
 export const getSinglePost = (req, res) => {
   const q =
-    "SELECT p.id, `username`, `title`, `desc`, p.img, u.img AS userImg, `cat`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ";
+    "SELECT p.id, `username`, `title`, `description`, p.img, u.img AS userImg, `cat`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ";
   db.query(q, [req.params.id], (err, data) => {
     //  console.log(data)
     if (err) return res.status(500).json(err);
@@ -24,10 +24,10 @@ export const addPost = (req, res) => {
   jwt.verify(token, "jwtkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid!");
     const q =
-    "INSERT INTO posts(`title`, `desc`, `uid`, `date`, `img`, `cat`)  VALUES (?)";
+    "INSERT INTO posts(`title`, `description`, `uid`, `date`, `img`, `cat`)  VALUES (?)";
     const values = [
       req.body.title,
-      req.body.desc,
+      req.body.description,
       userInfo.id,
       req.body.date,
       req.body.img,
@@ -63,8 +63,8 @@ export const updatePost = (req, res) => {
   jwt.verify(token, "jwtkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid!");
     const postId = req.params.id;
-    const q = "UPDATE posts SET `title`=?, `desc`=?, `img`=?, `cat`=? WHERE `id` = ? AND `uid` = ?";
-    const values = [req.body.title, req.body.desc, req.body.img, req.body.cat ]
+    const q = "UPDATE posts SET `title`=?, `description`=?, `img`=?, `cat`=? WHERE `id` = ? AND `uid` = ?";
+    const values = [req.body.title, req.body.description, req.body.img, req.body.cat ]
     db.query(q, [...values, postId, userInfo.id], (err, data) => {
       console.log(data);
 
